@@ -140,7 +140,7 @@ def crawl_cafe_contents(driver, access_token, upload_item):
         """
         for x in total_list:
         """
-    for j in range(upload_item.to_article_no-1, upload_item.from_article_no-1, -1):
+    for j in range(upload_item.to_article_no-1, upload_item.from_article_no-2, -1):
         try:
             time.sleep(50)
             adrs = "https://cafe.naver.com/ArticleRead.nhn?clubid="+upload_item.from_club_id+"&page=1&userDisplay=50&menuid="+upload_item.from_menu_id+"&boardtype=L&articleid=" + total_list[j][0] +"&referrerAllArticles=false"
