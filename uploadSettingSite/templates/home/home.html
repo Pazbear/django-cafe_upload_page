@@ -42,7 +42,7 @@
                         {% for upload_time in upload_time_list %}
                         <div style="display:flex; justify-content:space-around; height:40px;">
                             <input style="align-self:center;" type="radio" id="chosen_id" name="chosen_id" value={{upload_time.id}}>
-                            <label style="align-self:center;" for={{upload_time.id}}>{{upload_time.upload_hr}}:{{upload_time.upload_mn}}</label><br>
+                            <label style="align-self:center;" for={{upload_time.id}}>{{upload_time.upload_hr}}시</label><br>
 
                         </div>
                         {% endfor %}
@@ -52,28 +52,10 @@
                                 <label for="upload_time_hr">업로드 시간(시)</label>
                                 <input style="width:30px" type="text" id="upload_time_hr" name="upload_time_hr" value=""><br>
                             </div>
-                            <div
-                                style="display:flex; justify-content:space-around; flex-direction:column; margin:20px;">
-                                <label for="upload_time_mn">업로드 시간(분)</label>
-                                <input style="width:30px" type="text" id="upload_time_mn" name="upload_time_mn" value=""><br>
-                            </div>
                         </div>
                         <div style="display:flex; justify-content:space-around;">
                             <input type="submit" name="create_upload_time" value="추가">
                             <input type="submit" name="delete_upload_time" value="삭제">
-                        </div>
-                    </form>
-                </div>
-                <div>
-                    <h2 style="text-align:center;">Crontab 로그</h2>
-                    <div style="background:white; margin:10px;">
-                        {{cron_result}}
-                    </div>
-                    <form action="{% url 'home:index' %}" method="post">
-                        {% csrf_token %}
-                        <div style="display:flex; justify-content:space-around;">
-                            <button type="submit" name="refresh_cron">갱신</button>
-                            <button type="submit" name="remove_cron">삭제</button>
                         </div>
                     </form>
                 </div>

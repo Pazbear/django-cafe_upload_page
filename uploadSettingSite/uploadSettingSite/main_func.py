@@ -21,6 +21,7 @@ from urllib.parse import urlencode
 
 from board_matching.models import BoardMatching
 from user_setting.models import UserSetting
+from upload_time.models import UploadTime
 
 
 
@@ -238,29 +239,30 @@ def upload_cafe_with_image(access_token, contentList, imgList, upload_item):
         print("Error Code:" + rescode)
 
 def main_function():
-    print("\n\n",datetime.datetime.now())
-    chrome_options =webdriver.ChromeOptions()
+    d = datetime.datetime.now()
+    print(d)
+    current_upload_times = UploadTime.objects.filter(upload_hr = int(d.hour))
+    if current_upload_times:
+        chrome_options =webdriver.ChromeOptions()
 
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
 
-    """
-    display = Display(visible=0, size=(1024,768))
-    display.start()
-    """
-    driver = webdriver.Chrome('/Users/mkcho1997/Project/chromedriver', chrome_options=chrome_options)
-    checkFolder('temp_img/')
-    for user in UserSetting.objects.all():
-        access_token = get_naver_token(driver, user)
-        print(access_token)
-        print(user.naver_id+" 업로드")
-        uploadList =BoardMatching.objects.filter(user_no = user.id)
-        for upload_item in uploadList:
-            res = crawl_cafe_contents(driver, access_token, upload_item)
-            print("성공 : "+str(res[1]) +", 실패 : "+str(res[0]))
-    driver.quit()
-    deleteAllFilesInFolder('temp_img/')
+        driver = webdriver.Chrome('/Users/mkcho1997/Project/chromedriver', chrome_options=chrome_options)
+        checkFolder('temp_img/')
+        for user in UserSetting.objects.all():
+            access_token = get_naver_token(driver, user)
+            print(access_token)
+            print(user.naver_id+" 업로드")
+            uploadList =BoardMatching.objects.filter(user_no = user.id)
+            for upload_item in uploadList:
+                res = crawl_cafe_contents(driver, access_token, upload_item)
+                print("성공 : "+str(res[1]) +", 실패 : "+str(res[0]))
+        driver.quit()
+        deleteAllFilesInFolder('temp_img/')
+        print("\n\n")
+        
 """
 upload_cafe(access_token, res)
 """
